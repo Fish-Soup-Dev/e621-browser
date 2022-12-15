@@ -16,6 +16,7 @@ const NavBar = (props) => {
             <button className="btn-navbar" onClick={favorites}>Favorites</button>
             <button className="btn-navbar">Account</button>
             <button className="btn-navbar">Settings</button>
+            <button className="btn-refresh" onClick={props.refresh}>Refresh</button>
         </nav>
     );
 }

@@ -7,10 +7,6 @@ body {
   @apply  bg-cool-gray-2
 }
 
-.main-window {
-
-}
-
 .posts {
   display: flex;
   flex-wrap: wrap;
@@ -23,7 +19,11 @@ body {
 
 @layer components {
   .btn-navbar {
-    @apply bg-cool-gray-3 hover:bg-cool-gray-2 font-bold py-2 px-7 m-2 rounded text-white
+    @apply bg-cool-gray-3 hover:bg-cool-gray-2 font-bold py-2 px-7 m-2 rounded text-white align-middle
+  }
+
+  .btn-refresh {
+    @apply bg-cool-gray-3 hover:bg-cool-gray-2 font-bold py-2 px-4 m-2 rounded-full text-white align-middle fixed right-0
   }
 
   .search-bar {
@@ -48,5 +48,13 @@ body {
 
   .tag {
     @apply px-2 m-1 text-sm
+  }
+
+  .page-controll-button {
+    @apply bg-cool-gray-3 hover:bg-cool-gray-2 py-0 px-3 text-white
+  }
+
+  .page-number {
+    @apply bg-cool-gray-3 py-0 px-3 text-white
   }
 }

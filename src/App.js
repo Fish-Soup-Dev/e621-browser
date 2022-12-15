@@ -83,6 +83,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [topTags, setTopTags] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [pageNumber, setPageNumber] = useState(1);
 
   const getPosts = (tags, page) => {
     Axios.get("https://e621.net/posts?limit=75&page=" + page + "&tags="+tags, {
@@ -98,7 +99,30 @@ function App() {
     });
   };
 
+  const scrollUp = () => {
+    window.scrollTo(0, 0);
+  }
+
+  const pageUp = () => {
+    if (pageNumber + 1 === 750) return;
+    scrollUp();
+    setPageNumber(pageNumber + 1);
+    getPosts(searchText, pageNumber + 1);
+  };
+
+  const pageDown = () => {
+    if (pageNumber - 1 < 1) return;
+    scrollUp();
+    setPageNumber(pageNumber - 1);
+    getPosts(searchText, pageNumber - 1);
+  };
+
+  const refresh = () => {
+    getPosts(searchText, pageNumber);
+  };
+
   useEffect(() => {
+    setPageNumber(1);
     getPosts("", 1);
     setSearchText("");
   }, []);
@@ -108,10 +132,10 @@ function App() {
       
       <div className="main-window">
         <TagBar searchText={searchText} setSearchText={setSearchText} searchFunction={getPosts} tags={topTags}/>
-        <PostsVeiw posts={posts}/>
+        <PostsVeiw posts={posts} pageNumber={pageNumber} pageUp={pageUp} pageDown={pageDown}/>
       </div>
 
-      <NavBar searchFunction={getPosts} setSearchText={setSearchText}/>
+      <NavBar searchFunction={getPosts} setSearchText={setSearchText} refresh={refresh}/>
     </div>
   );
 }
