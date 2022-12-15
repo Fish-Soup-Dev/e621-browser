@@ -10,18 +10,20 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 900,
         height: 680,
+        autoHideMenuBar: true,
         webPreferences: {
-        nodeIntegration: true,
-        nativeWindowOpen: true,
+            nodeIntegration: true,
+            nativeWindowOpen: true,
         },
     });
     mainWindow.loadURL(
-        isDev
-        ? 'http://localhost:3000'
+        isDev? 'http://localhost:3000'
         : `file://${path.join(__dirname, '../build/index.html')}`,
     );
-    // Open the DevTools.
-    //mainWindow.webContents.openDevTools()
+    
+    if (isDev) {
+        mainWindow.webContents.openDevTools();
+    }
     mainWindow.on('closed', () => (mainWindow = null));
 
     if (!isDev) {

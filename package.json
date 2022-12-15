@@ -1,6 +1,6 @@
 {
   "name": "e621-browser",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "e621 desktop browser",
   "author": "andrew kawalec",
   "private": true,
@@ -27,7 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "set GH_TOKEN=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 && npm run build && electron-builder -c.extraMetadata.main=build/main.js --publish=always"
+    "electron-pack": "set GH_TOKEN=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 && npm run build && electron-builder -c.extraMetadata.main=build/main.js --publish=always"
   },
   "build": {
     "extends": null,
