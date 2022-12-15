@@ -3,12 +3,7 @@ const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
 const Store = require('electron-store');
 const { autoUpdater } = require('electron-updater');
-
-autoUpdater.setFeedURL({
-    provider: 'github',
-    owner: 'Fish-Soup-Dev',
-    repo: 'e621-browser',
-});
+const { dialog } = require('electron');
 
 let mainWindow;
 

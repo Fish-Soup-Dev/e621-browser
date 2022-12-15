@@ -1,6 +1,6 @@
 {
   "name": "e621-browser",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "e621 desktop browser",
   "author": "andrew kawalec",
   "private": true,
@@ -38,6 +38,12 @@
     ],
     "directories": {
       "buildResources": "public"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Fish-Soup-Dev",
+      "repo": "e621-browser",
+      "releaseType": "release"
     }
   },
   "eslintConfig": {
