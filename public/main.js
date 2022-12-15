@@ -8,6 +8,7 @@ let mainWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
+        icon: path.join(__dirname, './e621.ico'),
         width: 900,
         height: 680,
         autoHideMenuBar: true,
