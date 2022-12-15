@@ -117,11 +117,6 @@ function App() {
     getPosts(searchText, pageNumber - 1);
   };
 
-  const setPage1 = () => {
-    scrollUp();
-    setPageNumber(1);
-  };
-
   const refresh = () => {
     getPosts(searchText, pageNumber);
   };
@@ -136,11 +131,11 @@ function App() {
     <div className="App">
       
       <div className="main-window">
-        <TagBar searchText={searchText} setSearchText={setSearchText} searchFunction={getPosts} tags={topTags} setPage1={setPage1}/>
+        <TagBar searchText={searchText} setSearchText={setSearchText} searchFunction={getPosts} tags={topTags}/>
         <PostsVeiw posts={posts} pageNumber={pageNumber} pageUp={pageUp} pageDown={pageDown}/>
       </div>
 
-      <NavBar searchFunction={getPosts} setSearchText={setSearchText} refresh={refresh}/>
+      <NavBar searchFunction={getPosts} setSearchText={setSearchText} refresh={refresh} setPageNumber={setPageNumber}/>
     </div>
   );
 }
