@@ -2,6 +2,7 @@ const NavBar = (props) => {
     const home = () => {
         props.searchFunction("", 1);
         props.setSearchText("");
+        props.setPage1();
     }
     const favorites = () => {
         props.searchFunction("fav:sillyfella", 1);
