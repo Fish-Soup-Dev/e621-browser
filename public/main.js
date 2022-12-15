@@ -4,13 +4,19 @@ const isDev = require('electron-is-dev');
 const Store = require('electron-store');
 const { autoUpdater } = require('electron-updater');
 
+autoUpdater.setFeedURL({
+    provider: 'github',
+    owner: 'Fish-Soup-Dev',
+    repo: 'e621-browser',
+});
+
 let mainWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
         icon: path.join(__dirname, './e621.ico'),
-        width: 900,
-        height: 680,
+        width: 1280,
+        height: 720,
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
@@ -45,6 +51,10 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+setInterval(() => {
+    autoUpdater.checkForUpdatesAndNotify();
+}, 60000);
 
 autoUpdater.on('update-available', (_event, releaseNotes, releaseName) => {
     const dialogOpts = {
