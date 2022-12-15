@@ -27,7 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "set GH_TOKEN=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 && npm run build && electron-builder -c.extraMetadata.main=build/main.js --publish=always"
+    "electron-pack": "set GH_TOKEN= && npm run build && electron-builder -c.extraMetadata.main=build/main.js --publish=always"
   },
   "build": {
     "extends": null,
