@@ -43,6 +43,10 @@ body {
     @apply border border-cool-gray-0 rounded text-white w-40 h-fit m-2 grid flex-wrap justify-center
   }
 
+  .pool {
+    @apply border border-cool-gray-0 rounded text-white w-full h-fit m-2
+  }
+
   .post-image {
     @apply rounded
   }
@@ -51,8 +55,12 @@ body {
     @apply top-14 left-60 absolute
   }
 
+  .pools {
+    @apply top-14 absolute
+  }
+
   .tag {
-    @apply px-2 m-1 text-sm
+    @apply px-2 m-1 text-sm bg-cool-gray-2 hover:bg-cool-gray-3 font-semibold rounded
   }
 
   .page-controll-button {
@@ -63,11 +71,15 @@ body {
     @apply bg-cool-gray-3 py-0 px-3 text-white
   }
 
-  .acount-window {
-    @apply bg-cool-gray-3 w-screen h-screen grid justify-center items-center
-  }
-
   .e6-font {
     @apply font-bold text-white 
+  }
+
+  .settings-nav {
+    @apply bg-cool-gray-3 w-60 h-screen fixed top-14 grid grid-cols-1
+  }
+
+  .btn-settings-nav {
+    @apply bg-cool-gray-2 hover:bg-cool-gray-1 font-bold py-1 px-14 m-2 rounded text-white grid justify-center items-center h-10
   }
 }

@@ -1,9 +1,10 @@
 import Home from './pages/Home';
 import Pools from './pages/Pools';
 import Posts from './pages/Posts';
-import Account from "./pages/Account";
 import Settings from "./pages/Settings";
 import Favorites from "./pages/Favorites";
+import SettingsTheme from './pages/SettingsTheme';
+import SettingsAccount from './pages/SettingsAccount';
 
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -16,9 +17,10 @@ function App() {
             <Route exact path="/" element={<Home />}/>
             <Route path="/pools" element={<Pools />}/>
             <Route path="/posts" element={<Posts />}/>
-            <Route path="/account" element={<Account />}/>
             <Route path="/settings" element={<Settings />}/>
             <Route path="/favorites" element={<Favorites />}/>
+            <Route path="/settings/theme" element={<SettingsTheme />}/>
+            <Route path="/settings/account" element={<SettingsAccount />}/>
             <Route path="*" element={<Home />}/>
           </Routes>
         </div>

@@ -1,15 +1,16 @@
 import NavBar from '../components/Navbar';
 import SettingsNav from '../components/SettingNav';
 
-const Settings = (props) => {
+const SettingsTheme = (props) => {
     return ( 
        <div>
             <SettingsNav/>
-            <div className="settings-window">
+            <div className="postveiw">
+                <h1>Theme</h1>
             </div>
             <NavBar/>
        </div> 
     );
 }
  
-export default Settings;
+export default SettingsTheme;
