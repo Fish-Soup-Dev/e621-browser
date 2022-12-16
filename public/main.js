@@ -1,9 +1,8 @@
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
 const Store = require('electron-store');
 const { autoUpdater } = require('electron-updater');
-const { dialog } = require('electron');
 
 let mainWindow;
 
@@ -15,7 +14,7 @@ function createWindow() {
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
-            nativeWindowOpen: true,
+            contextIsolation: false
         },
     });
     mainWindow.loadURL(
@@ -79,11 +78,14 @@ autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
     });
 });
 
-
 const schema = {
     theme: {
         type: 'string',
         default: 'dark',
+    },
+    loged_in: {
+        type: 'boolean',
+        default: false,
     },
     user_name: {
         type: 'string',
@@ -108,3 +110,12 @@ const schema = {
 };
 
 const store = new Store({schema});
+
+ipcMain.on('get-data', (event, arg) => {
+    event.returnValue = store.get(arg);
+});
+
+ipcMain.on('set-data', (event, arg, arg1) => {
+    store.set(arg, arg1);
+    event.returnValue = true;
+});
