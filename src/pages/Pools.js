@@ -18,30 +18,60 @@ const Pools = (props) => {
         }
     }
 
-    const getPools = (name) => {
-        if (name === "") {
-            Axios.get("https://e621.net/pools?limit=75", {
-            headers: {
-                //"User-Agent": "e621dl/2.0 (by silly fella)", // idk about this
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": "Basic " + getData()
-            },
-            }).then((response) => {
-                setPools(response.data);
-            });
-        } else {
-            Axios.get("https://e621.net/pools?limit=75&search[name_matches]=" + name, {
-            headers: {
-                //"User-Agent": "e621dl/2.0 (by silly fella)", // idk about this
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": "Basic " + getData()
-            },
-            }).then((response) => {
-                setPools(response.data);
-            });
+    const getLoginStat = () => {
+        if (ipcRenderer.sendSync('get-data', 'loged_in') === true) {
+            return true;
         }
+    }
+
+    const getPools = (name) => {
+        if (getLoginStat() === true) {
+            if (name === "") {
+                Axios.get("https://e621.net/pools?limit=75", {
+                headers: {
+                    //"User-Agent": "e621dl/2.0 (by silly fella)", // idk about this
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": "Basic " + getData()
+                },
+                }).then((response) => {
+                    setPools(response.data);
+                });
+            } else {
+                Axios.get("https://e621.net/pools?limit=75&search[name_matches]=" + name, {
+                headers: {
+                    //"User-Agent": "e621dl/2.0 (by silly fella)", // idk about this
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": "Basic " + getData()
+                },
+                }).then((response) => {
+                    setPools(response.data);
+                });
+            }
+        } else {
+            if (name === "") {
+                Axios.get("https://e621.net/pools?limit=75", {
+                headers: {
+                    //"User-Agent": "e621dl/2.0 (by silly fella)", // idk about this
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                }).then((response) => {
+                    setPools(response.data);
+                });
+            } else {
+                Axios.get("https://e621.net/pools?limit=75&search[name_matches]=" + name, {
+                headers: {
+                    //"User-Agent": "e621dl/2.0 (by silly fella)", // idk about this
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                }).then((response) => {
+                    setPools(response.data);
+                });
+            }
+        } 
     };
 
     useEffect(() => {

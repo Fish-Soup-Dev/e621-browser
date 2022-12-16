@@ -85,11 +85,9 @@ const Posts = () => {
     const [topTags, setTopTags] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [pageNumber, setPageNumber] = useState(1);
-    const [loged_in, setLoged_in] = useState(false);
 
-    const getData = () => {
+    const getKey = () => {
         if (ipcRenderer.sendSync('get-data', 'loged_in') === true) {
-            setLoged_in(true);
             let userName = ipcRenderer.sendSync('get-data', 'user_name');
             let userKey = ipcRenderer.sendSync('get-data', 'user_api_key');
             let base64key = Buffer.from(userName + ":" + userKey).toString('base64');
@@ -97,14 +95,20 @@ const Posts = () => {
         }
     }
 
+    const getLoginStat = () => {
+        if (ipcRenderer.sendSync('get-data', 'loged_in') === true) {
+            return true;
+        }
+    }
+
     const getPosts = (tags, page) => {
-        if (loged_in) {
-            Axios.get("https://e621.net/posts?limit=75&page=" + page + "&tags="+tags, {
+        if (getLoginStat() === true) {
+            Axios.get("https://e621.net/posts?limit=75&page=" + page + "&tags=" + tags, {
             headers: {
                 //"User-Agent": "e621dl/2.0 (by silly fella)", // idk about this
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": "basic " + getData()
+                "Authorization": "basic " + getKey()
             },
             }).then((response) => {
                 setPosts(response.data.posts);
@@ -112,7 +116,7 @@ const Posts = () => {
             });
         }
         else {
-            Axios.get("https://e621.net/posts?limit=75&page=" + page + "&tags="+tags, {
+            Axios.get("https://e621.net/posts?limit=75&page=" + page + "&tags=" + tags, {
             headers: {
                 //"User-Agent": "e621dl/2.0 (by silly fella)", // idk about this
                 "Accept": "application/json",

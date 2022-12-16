@@ -3,8 +3,10 @@ import NavBar from '../components/Navbar';
 const Favorites = (props) => {
     return ( 
        <div>
+            <div className="grid top-14 absolute">
+                <h1 className="font-bold text-white">No Favorites</h1>
+            </div>
             <NavBar/>
-            <h1 className="text-white font-bold top-14 left-60 absolute">Favorites</h1>
        </div> 
     );
 }
