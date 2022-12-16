@@ -1,6 +1,6 @@
 {
   "name": "e621-browser",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "e621 desktop browser",
   "author": "andrew kawalec",
   "private": true,
