@@ -1,6 +1,6 @@
 {
   "name": "e621-browser",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "e621 desktop browser",
   "author": "andrew kawalec",
   "private": true,
@@ -15,7 +15,6 @@
     "electron-is-dev": "^2.0.0",
     "electron-store": "^8.1.0",
     "electron-updater": "^5.3.0",
-    "fs": "^0.0.1-security",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.5",
