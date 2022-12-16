@@ -5,7 +5,7 @@ import Account from "./pages/Account";
 import Settings from "./pages/Settings";
 import Favorites from "./pages/Favorites";
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
