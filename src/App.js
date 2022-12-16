@@ -19,7 +19,7 @@ function App() {
             <Route path="/account" element={<Account />}/>
             <Route path="/settings" element={<Settings />}/>
             <Route path="/favorites" element={<Favorites />}/>
-            <Route path="*" element={<Navigate to="/"/>}/>
+            <Route path="*" element={<Home />}/>
           </Routes>
         </div>
       </div>
