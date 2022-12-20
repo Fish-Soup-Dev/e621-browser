@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 body {
-  @apply  bg-cool-gray-2
+  @apply  bg-gray-700
 }
 
 .posts {
@@ -20,35 +20,35 @@ body {
 
 @layer components {
   .btn-navbar {
-    @apply bg-cool-gray-3 hover:bg-cool-gray-2 font-bold py-2 px-7 m-2 rounded text-white align-middle
+    @apply bg-gray-800 hover:bg-gray-900 font-bold py-2 px-7 m-2 rounded text-white align-middle;
   }
 
   .btn-refresh {
-    @apply bg-cool-gray-3 hover:bg-cool-gray-2 font-bold py-2 px-4 m-2 rounded-full text-white align-middle fixed right-0
+    @apply bg-gray-800 hover:bg-gray-900 font-bold py-2 px-4 m-2 rounded-full text-white align-middle fixed right-0
   }
 
   .navbar {
-    @apply bg-cool-gray-3 font-bold py-4 text-white w-56
+    @apply bg-gray-600 font-bold py-4 text-white w-56
   }
 
   .search-bar {
-    @apply bg-cool-gray-2 font-bold py-2 px-4 m-2 rounded text-white w-56
+    @apply bg-gray-700 font-bold py-2 px-4 m-2 rounded text-white w-56
   }
   
   .tagbar {
-    @apply bg-cool-gray-3 w-60 h-screen fixed top-14
+    @apply bg-gray-800 w-60 h-screen fixed top-14
   }
 
   .post {
-    @apply border border-cool-gray-0 rounded text-white w-40 h-fit m-2 grid flex-wrap justify-center
+    @apply rounded text-white w-40 h-fit m-2 grid flex-wrap justify-center bg-gray-800
   }
 
   .pool {
-    @apply border border-cool-gray-0 rounded text-white w-full h-fit m-2
+    @apply border border-gray-800 rounded text-white w-full h-fit m-2
   }
 
   .post-image {
-    @apply rounded
+    @apply rounded border-2
   }
 
   .postveiw {
@@ -60,15 +60,15 @@ body {
   }
 
   .tag {
-    @apply px-2 m-1 text-sm bg-cool-gray-2 hover:bg-cool-gray-3 font-semibold rounded
+    @apply px-2 m-1 text-sm bg-gray-700 hover:bg-gray-900 font-semibold rounded
   }
 
   .page-controll-button {
-    @apply bg-cool-gray-3 hover:bg-cool-gray-2 py-0 px-3 text-white
+    @apply bg-gray-800 hover:bg-gray-900 py-0 px-3 text-white
   }
 
   .page-number {
-    @apply bg-cool-gray-3 py-0 px-3 text-white
+    @apply bg-gray-800 py-0 px-3 text-white
   }
 
   .e6-font {
@@ -76,10 +76,14 @@ body {
   }
 
   .settings-nav {
-    @apply bg-cool-gray-3 w-60 h-screen fixed top-14 grid grid-cols-1
+    @apply bg-gray-800 w-60 h-screen fixed top-14 grid grid-cols-1
   }
 
   .btn-settings-nav {
-    @apply bg-cool-gray-2 hover:bg-cool-gray-1 font-bold py-1 px-14 m-2 rounded text-white grid justify-center items-center h-10
+    @apply bg-gray-700 hover:bg-gray-600 font-bold py-1 px-14 m-2 rounded text-white grid justify-center items-center h-10
+  }
+
+  .defualt-icons {
+    @apply relative flex items-center justify-center;
   }
 }

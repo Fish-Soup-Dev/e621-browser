@@ -86,7 +86,7 @@ const Pools = (props) => {
 
     return ( 
        <div>
-            <div className="bg-cool-gray-3 w-60 h-screen fixed top-14">
+            <div className="bg-gray-800 w-60 h-screen fixed top-14">
                 <input className="search-bar" type="text" placeholder="Search" onKeyDown={_handleKeyDown} value={search} onChange={(e) => setSearch(e.target.value)}/>
             </div>
             <div className="pools grid top-14 left-60 absolute">

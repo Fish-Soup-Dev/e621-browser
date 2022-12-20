@@ -1,3 +1,5 @@
+import { BsFillPlusSquareFill, BsFillDashSquareFill } from "react-icons/bs";
+
 const TagBar = (props) => {
     const _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -10,30 +12,44 @@ const TagBar = (props) => {
         props.searchFunction(props.searchText + " " + tag.name, 1);
     }
 
-    const showTag = (tag) => {
+    const removeFromSearch = (tag) => {
+        props.setSearchText(props.searchText + " -" + tag.name);
+        props.searchFunction(props.searchText + " -" + tag.name, 1);
+    }
+    
+    const tagColor = (tag) => {
         if (tag.type === 0) {
-            return <li className="tag text-ok-yellow" onClick={() => addtoSearch(tag)} key={tag.name}>{tag.name}</li>
+            return "text-ok-yellow"
         } else if (tag.type === 1){
-            return <li className="tag text-mid-orange" onClick={() => addtoSearch(tag)} key={tag.name}>{tag.name}</li>
+            return "text-mid-orange"
         } else if (tag.type === 2){
-            return <li className="tag text-white" onClick={() => addtoSearch(tag)} key={tag.name}>{tag.name}</li>
+            return "text-white"
         } else if (tag.type === 3){
-            return <li className="tag text-bad-red" onClick={() => addtoSearch(tag)} key={tag.name}>{tag.name}</li>
+            return "text-bad-red"
         } else if (tag.type === 4){
-            return <li className="tag text-sus-purple" onClick={() => addtoSearch(tag)} key={tag.name}>{tag.name}</li>
+            return "text-sus-purple"
         }
     }
 
 
     return ( 
         <div className="tagbar">
-            <input type="text" value={props.searchText} onKeyDown={_handleKeyDown} onChange={(e) => props.setSearchText(e.target.value)} placeholder="Search" className="search-bar"/>
-            <ul className="tags">
-                <h1 className="font-bold text-white px-4">Tags</h1>
+            <input type="text" 
+                   className="search-bar" 
+                   value={props.searchText} 
+                   onKeyDown={_handleKeyDown} 
+                   onChange={(e) => props.setSearchText(e.target.value)} 
+                   placeholder="Search"
+            />
+            <div className="tags">
                 {props.tags.map((tag) => (
-                    showTag(tag)
+                    <div className="flex flex-row items-center mx-1" key={tag.name}>
+                        <BsFillPlusSquareFill className={`mx-1 ${tagColor(tag)}`} onClick={() => addtoSearch(tag)} />
+                        <BsFillDashSquareFill className={`mx-1 ${tagColor(tag)}`} onClick={() => removeFromSearch(tag)} />
+                        <p className={`mx-1 font-bold ${tagColor(tag)}`}>{tag.name}</p>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 }

@@ -1,16 +1,22 @@
-const Post = (props) => {
-    const ShowRating = (rating) => {
-        if (rating === "s") {
-            return <p className="px-1 text-good-green">S</p>
-        } else if (rating === "q") {
-            return <p className="px-1 text-ok-yellow">Q</p>
-        } else if (rating === "e") {
-            return <p className="px-1 text-bad-red">E</p>
-        } else {
-            return <p className="px-1 text-white">U</p>
-        }
-    }
+import { BsArrowUpSquareFill, BsArrowDownSquareFill, BsFillDashSquareFill } from "react-icons/bs";
+import { BsHeartFill, BsChatRightTextFill, BsFillPlayFill } from "react-icons/bs";
+import { MdGif } from "react-icons/md";
 
+const Post = (props) => {
+
+    let type;
+    if (props.post.file.ext === "webm") {
+        type = 
+            <div className="defualt-icons absolute">
+                <MdGif size="40" className="text-white" />
+            </div>
+    } else if (props.post.file.ext === "gif") {
+        type =
+            <div className="defualt-icons absolute">
+                <BsFillPlayFill size="40" className="text-white" />
+            </div>
+    }
+    
     const ShowPostWindow = (post) => {
         const w = window.open('', "_blank");
         if (post.file.ext === "webm") {
@@ -19,27 +25,61 @@ const Post = (props) => {
             w.document.write(`<img src="${post.file.url}" alt="" style="width: 100%; height: 100%; object-fit: contain;"/>`);
         }
     }
+    
+    let score;
+    if (props.post.score.total < 0) {
+        score = 
+        <div className="defualt-icons"> 
+            <BsArrowDownSquareFill className="text-bad-red" /> 
+            <p className="m-1">{props.post.score.total}</p> 
+        </div>
+    }
+    else if (props.post.score.total > 0) {
+        score =
+        <div className="defualt-icons"> 
+            <BsArrowUpSquareFill className="text-good-green" /> 
+            <p className="m-1">{props.post.score.total}</p> 
+        </div>
+    } else {
+        score =
+        <div className="defualt-icons">
+            <BsFillDashSquareFill className="text-white" />
+            <p className="m-1">{props.post.score.total}</p>
+        </div>
+    }
 
-    const ShowPostType = (post) => {
-        if (post.file.ext === "webm") {
-            return <p className="px-1 text-white font-bold absolute outline rounded bg-sus-purple outline-sus-purple">Webm</p>
-        } else if (post.file.ext === "gif") {
-            return <p className="px-1 text-white font-bold absolute outline rounded bg-sus-purple outline-sus-purple">Gif</p>
-        }
+    let fav = 
+        <div className="defualt-icons">
+            <BsHeartFill className="text-white" />
+            <p className="m-1">{props.post.fav_count}</p>
+        </div>
+    
+    let comment =
+        <div className="defualt-icons">
+            <BsChatRightTextFill className="text-white" />
+            <p className="m-1">{props.post.comment_count}</p>
+        </div>
+
+    let rateing;
+    if (props.post.rating === "s") {
+        rateing = "border-good-green"
+    } else if (props.post.rating === "q") {
+        rateing = "border-ok-yellow"
+    } else if (props.post.rating === "e") {
+        rateing = "border-bad-red"
     }
 
     return ( 
-        <div className="post">
-            {ShowPostType(props.post)}
+        <div className="post shadow-xl flex flex-col items-center">
             <button>
-                <img src={props.post.preview.url} alt="" className="post-image" onClick={() => ShowPostWindow(props.post)}/>
+                {type}
+                <img src={props.post.preview.url} 
+                     alt=""
+                     className={`post-image ${rateing}`}
+                     onClick={() => ShowPostWindow(props.post)}
+                />
             </button>
-            <div style={{"display": "flex"}}>
-                <p className={`${props.post.score.total < 0 ? "text-bad-red" : "text-good-green"}`}>S{props.post.score.total}</p>
-                <p className="px-1">F{props.post.fav_count}</p>
-                <p>C{props.post.comment_count}</p>
-                {ShowRating(props.post.rating)}
-            </div>
+            <div className="flex flex-row justify-center"> {score} {fav} {comment} </div>
         </div>
     );
 }

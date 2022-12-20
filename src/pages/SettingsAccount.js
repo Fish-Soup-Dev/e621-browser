@@ -43,18 +43,18 @@ const SettingsAccount = (props) => {
 
     return ( 
        <div>
-            <div className="postveiw bg-cool-gray-0 grid rounded place-items-center px-40 py-10">
-                {logedIn ? <h1 className="e6-font m-2 text-good-green">Loged in</h1> : <h1 className="e6-font m-2 text-bad-red">Not loged in</h1>}
+            <div className="postveiw">
+                {logedIn ? <h1 className="e6-font m-4 text-good-green">Loged in</h1> : <h1 className="e6-font m-2 text-bad-red">Not loged in</h1>}
                 <div>
-                    <input value={user} onChange={(e) => setUser(e.target.value)} className="search-bar" type="text" placeholder="UserName"/>
+                    <input value={user} onChange={(e) => setUser(e.target.value)} className="search-bar bg-gray-800 w-96" type="text" placeholder="UserName"/>
                 </div>
                 <div>
-                    <input value={key} onChange={(e) => setKey(e.target.value)} className="search-bar" type="text" placeholder="ApiKey"/>
+                    <input value={key} onChange={(e) => setKey(e.target.value)} className="search-bar bg-gray-800 w-96" type="text" placeholder="ApiKey"/>
                 </div>
                 <div>
                     {logedIn ?
-                        <button className="bg-cool-gray-2 hover:bg-cool-gray-1 font-bold py-2 px-7 m-2 rounded text-white align-middle" onClick={log_out}>Log out</button> :
-                        <button className="bg-cool-gray-2 hover:bg-cool-gray-1 font-bold py-2 px-7 m-2 rounded text-white align-middle" onClick={login}>Log in</button>
+                        <button className="btn-navbar align-middle" onClick={log_out}>Log out</button> :
+                        <button className="btn-navbar align-middle" onClick={login}>Log in</button>
                     }
                 </div>
             </div>

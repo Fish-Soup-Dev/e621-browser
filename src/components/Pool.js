@@ -1,6 +1,6 @@
 const Pool = (props) => {
     return ( 
-        <div className="pool bg-cool-gray-0 hover:bg-cool-gray-1">
+        <div className="pool bg-gray-800 hover:bg-gray-900">
             <button>
                 <h1>{props.pool.name}</h1>
             </button>
