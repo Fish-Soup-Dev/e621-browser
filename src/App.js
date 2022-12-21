@@ -1,6 +1,7 @@
 import Home from './pages/Home';
 import Pools from './pages/Pools';
 import Posts from './pages/Posts';
+import PostPage from './pages/PostPage';
 import Settings from "./pages/Settings";
 import Favorites from "./pages/Favorites";
 import SettingsTheme from './pages/SettingsTheme';
@@ -18,6 +19,7 @@ function App() {
             <Route exact path="/" element={<Home />}/>
             <Route path="/pools" element={<Pools />}/>
             <Route path="/posts" element={<Posts />}/>
+            <Route path="/posts/:id" element={<PostPage />}/>
             <Route path="/settings" element={<Settings />}/>
             <Route path="/favorites" element={<Favorites />}/>
             <Route path="/settings/theme" element={<SettingsTheme />}/>

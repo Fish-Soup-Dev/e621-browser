@@ -9,8 +9,10 @@ let mainWindow;
 function createWindow() {
     mainWindow = new BrowserWindow({
         icon: path.join(__dirname, './e621.ico'),
-        width: 1280,
-        height: 720,
+        width: 1330,
+        height: 760,
+        minWidth: 1330,
+        minHeight: 760,
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
@@ -47,7 +49,9 @@ app.on('activate', () => {
 });
 
 setInterval(() => {
-    autoUpdater.checkForUpdatesAndNotify();
+    if (!isDev) {
+        autoUpdater.checkForUpdatesAndNotify();
+    }
 }, 60000);
 
 autoUpdater.on('update-available', (_event, releaseNotes, releaseName) => {
@@ -94,6 +98,14 @@ const schema = {
     user_api_key: {
         type: 'string',
         default: '',
+    },
+    download_path: {
+        type: 'string',
+        default: '',
+    },
+    fav_posts: {
+        type: 'array',
+        default: [],
     },
     fav_artists: {
         type: 'array',

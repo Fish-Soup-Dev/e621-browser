@@ -2,6 +2,8 @@ import { BsArrowUpSquareFill, BsArrowDownSquareFill, BsFillDashSquareFill } from
 import { BsHeartFill, BsChatRightTextFill, BsFillPlayFill } from "react-icons/bs";
 import { MdGif } from "react-icons/md";
 
+import { Link } from "react-router-dom";
+
 const Post = (props) => {
 
     let type;
@@ -15,15 +17,6 @@ const Post = (props) => {
             <div className="defualt-icons absolute">
                 <BsFillPlayFill size="40" className="text-white" />
             </div>
-    }
-    
-    const ShowPostWindow = (post) => {
-        const w = window.open('', "_blank");
-        if (post.file.ext === "webm") {
-            w.document.write(`<video src="${post.file.url}" controls autoplay style="width: 100%; height: 100%; object-fit: contain;"></video>`);
-        } else {
-            w.document.write(`<img src="${post.file.url}" alt="" style="width: 100%; height: 100%; object-fit: contain;"/>`);
-        }
     }
     
     let score;
@@ -71,14 +64,13 @@ const Post = (props) => {
 
     return ( 
         <div className="post shadow-xl flex flex-col items-center">
-            <button>
+            <Link to={`/posts/${props.post.id}`} className="">
                 {type}
                 <img src={props.post.preview.url} 
                      alt=""
                      className={`post-image ${rateing}`}
-                     onClick={() => ShowPostWindow(props.post)}
                 />
-            </button>
+            </Link>
             <div className="flex flex-row justify-center"> {score} {fav} {comment} </div>
         </div>
     );
