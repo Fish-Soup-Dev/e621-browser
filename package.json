@@ -1,8 +1,8 @@
 {
   "name": "e621-browser",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "e621 desktop browser",
-  "author": "andrew kawalec",
+  "author": "Andrew Kawalec <andrewkawalec164@gmail.com>",
   "private": true,
   "main": "./public/main.js",
   "homepage": "./",
@@ -32,8 +32,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "set GH_TOKEN= && npm run build && electron-builder -c.extraMetadata.main=build/main.js --publish=always"
+    "run-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "dist:linux": "npm run build && electron-builder --linux -c.extraMetadata.main=build/main.js",
+    "dist:windows": "electron-builder --windows -c.extraMetadata.main=build/main.js"
   },
   "build": {
     "extends": null,
@@ -45,11 +46,13 @@
     "directories": {
       "buildResources": "public"
     },
-    "publish": {
-      "provider": "github",
-      "owner": "Fish-Soup-Dev",
-      "repo": "e621-browser",
-      "releaseType": "release"
+    "linux": {
+      "target": [
+        "deb",
+        "snap",
+        "rpm"
+      ],
+      "category": "Social"
     }
   },
   "eslintConfig": {

@@ -7,6 +7,7 @@ const SettingsNav = (props) => {
                 <Link to="/settings/theme" className="btn-settings-nav">Theme</Link>
                 <Link to="/settings/account" className="btn-settings-nav">Account</Link>
                 <Link to="/settings/data" className="btn-settings-nav">Data</Link>
+                <Link to="/settings/info" className="btn-settings-nav">Info</Link>
             </div>
        </div> 
     );
