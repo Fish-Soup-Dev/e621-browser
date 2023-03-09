@@ -33,8 +33,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "run-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "dist:linux": "npm run build && electron-builder --linux -c.extraMetadata.main=build/main.js",
-    "dist:windows": "electron-builder --windows -c.extraMetadata.main=build/main.js"
+    "upload": "npm run build && electron-builder --linux --windows -c.extraMetadata.main=build/main.js  --publish=always"
   },
   "build": {
     "extends": null,
@@ -45,6 +44,12 @@
     ],
     "directories": {
       "buildResources": "public"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Fish-Soup-Dev",
+      "repo": "e621-browser",
+      "releaseType": "release"
     },
     "linux": {
       "target": [
