@@ -58,6 +58,7 @@ const SettingsAccount = (props) => {
                     }
                 </div>
             </div>
+            
             <SettingsNav/>
             <NavBar/>
        </div> 

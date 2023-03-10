@@ -5,6 +5,7 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 const Store = require('electron-store');
 const E621 = require('e621');
+const opn = require('opn');
 
 let mainWindow;
 let devtools;
@@ -14,8 +15,8 @@ function createWindow() {
         icon: path.join(__dirname, './e621.ico'),
         width: 1330,
         height: 760,
-        minWidth: 1330,
-        minHeight: 760,
+        minWidth: 640,
+        minHeight: 480,
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
@@ -60,34 +61,53 @@ setInterval(() => {
     }
 }, 50000);
 
-// ! Windows only
+//? Update checker
 //-----------------------------------------------------------------------------------
+let update_avalable = false;
+
 autoUpdater.on('update-available', (_event, releaseNotes, releaseName) => {
-    const dialogOpts = {
-        type: 'info',
-        buttons: ['ok'],
-        title: 'Application Update',
-        message: process.platform === 'win32' ? releaseNotes : releaseName,
-        detail: 'A new version is being downloaded.',
-    };
+    if (process.platform === 'win32') {
+        const dialogOpts = {
+            type: 'info',
+            buttons: ['ok'],
+            title: 'Application Update',
+            message: process.platform === 'win32' ? releaseNotes : releaseName,
+            detail: 'A new version is being downloaded.',
+        };
+    
+        dialog.showMessageBox(dialogOpts, (response) => {});
+    }
 
-    dialog.showMessageBox(dialogOpts, (response) => {
-
-    });
+    update_avalable = true;
 });
 
-autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
-    const dialogOpts = {
-        type: 'info',
-        buttons: ['restart', 'later'],
-        title: 'Application Update',
-        message: process.platform === 'win32' ? releaseNotes : releaseName,
-        detail: 'A new version has been downloaded. Restart the application to apply the updates.',
-    };
+ipcMain.on('get-is-update-avalable', (event) => {
+    event.returnValue = update_avalable;
+})
 
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-        if (returnValue.response === 0) autoUpdater.quitAndInstall();
-    });
+ipcMain.on('restart-and-update', (event) => {
+    if (process.platform === 'win32') {
+        autoUpdater.quitAndInstall();
+    }
+    else if (process.platform === 'linux') {
+        opn("https://github.com/Fish-Soup-Dev/e621-browser/releases/latest");
+    }
+})
+
+autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
+    if (process.platform === 'win32') {
+        const dialogOpts = {
+            type: 'info',
+            buttons: ['restart', 'later'],
+            title: 'Application Update',
+            message: process.platform === 'win32' ? releaseNotes : releaseName,
+            detail: 'A new version has been downloaded. Restart the application to apply the updates.',
+        };
+
+        dialog.showMessageBox(dialogOpts).then((returnValue) => {
+            if (returnValue.response === 0) autoUpdater.quitAndInstall();
+        });
+    }
 });
 //-----------------------------------------------------------------------------------
 
@@ -198,3 +218,4 @@ ipcMain.on('get-post', (event, post_id) => {
     })
 })
 //-----------------------------------------------------------------------------------
+
