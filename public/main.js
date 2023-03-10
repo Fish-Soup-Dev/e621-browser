@@ -1,10 +1,13 @@
-const path = require('path');
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
-const isDev = require('electron-is-dev');
-const Store = require('electron-store');
 const { autoUpdater } = require('electron-updater');
 
+const path = require('path');
+const isDev = require('electron-is-dev');
+const Store = require('electron-store');
+const E621 = require('e621');
+
 let mainWindow;
+let devtools;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -19,19 +22,22 @@ function createWindow() {
             contextIsolation: false
         },
     });
+
+    if (isDev) {
+        devtools = new BrowserWindow();
+        mainWindow.webContents.setDevToolsWebContents(devtools.webContents);
+        mainWindow.webContents.openDevTools({ mode: 'detach' });
+    }
+    else {
+        autoUpdater.checkForUpdatesAndNotify();
+    }
+
     mainWindow.loadURL(
         isDev? 'http://localhost:3000'
         : `file://${path.join(__dirname, '../build/index.html')}`,
     );
-    
-    if (isDev) {
-        mainWindow.webContents.openDevTools();
-    }
-    mainWindow.on('closed', () => (mainWindow = null));
 
-    if (!isDev) {
-        autoUpdater.checkForUpdatesAndNotify();
-    }
+    mainWindow.on('closed', () => (mainWindow = null));
 }
 
 app.on('ready', createWindow);
@@ -52,8 +58,10 @@ setInterval(() => {
     if (!isDev) {
         autoUpdater.checkForUpdatesAndNotify();
     }
-}, 60000);
+}, 50000);
 
+// ! Windows only
+//-----------------------------------------------------------------------------------
 autoUpdater.on('update-available', (_event, releaseNotes, releaseName) => {
     const dialogOpts = {
         type: 'info',
@@ -81,13 +89,14 @@ autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
         if (returnValue.response === 0) autoUpdater.quitAndInstall();
     });
 });
+//-----------------------------------------------------------------------------------
 
 const schema = {
     theme: {
         type: 'string',
         default: 'dark',
     },
-    loged_in: {
+    logged_in: {
         type: 'boolean',
         default: false,
     },
@@ -131,3 +140,61 @@ ipcMain.on('set-data', (event, arg, arg1) => {
     store.set(arg, arg1);
     event.returnValue = true;
 });
+
+//? Loggin
+//-----------------------------------------------------------------------------------
+//const e621 = new E621({authUser: store.get('user_name'), authKey: store.get('user_api_key')});
+const e621 = new E621();
+//-----------------------------------------------------------------------------------
+
+let global_blacklist = [
+    "gore",
+    "scat",
+    "watersports",
+    "young -rating:s",
+    "loli",
+    "shota"
+];
+
+//? E621 Page Search
+//-----------------------------------------------------------------------------------
+let search_text = "";
+let search_page = 1;
+
+ipcMain.on('get-page-number', (event) => {
+    event.returnValue = search_page;
+})
+
+ipcMain.on('get-search-text', (event) => {
+    event.returnValue = search_text;
+})
+
+ipcMain.on('get-posts-from-search', (event, search_string, keep_last_search, page_number, keep_last_page) => {
+    if (!keep_last_search) {
+        search_text = search_string;
+    }
+
+    if (!keep_last_page) {
+        search_page = page_number;
+    }
+
+    const searchOptions = {
+        tags: search_text + " -" + global_blacklist.join(' -'),
+        page: search_page,
+        limit: 75
+    };
+
+    e621.posts.search(searchOptions).then(data => {
+        event.returnValue = data;
+    })
+})
+//-----------------------------------------------------------------------------------
+
+//? E621 get post
+//-----------------------------------------------------------------------------------
+ipcMain.on('get-post', (event, post_id) => {
+    e621.posts.get(post_id).then(data => {
+        event.returnValue = data;
+    })
+})
+//-----------------------------------------------------------------------------------

@@ -10,12 +10,12 @@ const Post = (props) => {
     if (props.post.file.ext === "webm") {
         type = 
             <div className="defualt-icons absolute">
-                <MdGif size="40" className="text-white" />
+                <BsFillPlayFill size="40" className="text-white" />
             </div>
     } else if (props.post.file.ext === "gif") {
         type =
             <div className="defualt-icons absolute">
-                <BsFillPlayFill size="40" className="text-white" />
+                <MdGif size="40" className="text-white" />
             </div>
     }
     

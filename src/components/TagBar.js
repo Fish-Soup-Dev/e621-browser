@@ -3,18 +3,18 @@ import { BsFillPlusSquareFill, BsFillDashSquareFill } from "react-icons/bs";
 const TagBar = (props) => {
     const _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            props.searchFunction(props.searchText, 1);
+            props.searchFunction(props.searchText, false, 1, false);
         }
     }
 
     const addtoSearch = (tag) => {
         props.setSearchText(props.searchText + " " + tag.name);
-        props.searchFunction(props.searchText + " " + tag.name, 1);
+        props.searchFunction(props.searchText + " " + tag.name, false, 1, false);
     }
 
     const removeFromSearch = (tag) => {
         props.setSearchText(props.searchText + " -" + tag.name);
-        props.searchFunction(props.searchText + " -" + tag.name, 1);
+        props.searchFunction(props.searchText + " -" + tag.name, false, 1, false);
     }
     
     const tagColor = (tag) => {
@@ -30,7 +30,6 @@ const TagBar = (props) => {
             return "text-sus-purple"
         }
     }
-
 
     return ( 
         <div className="tagbar">

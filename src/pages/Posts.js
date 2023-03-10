@@ -2,7 +2,6 @@ import TagBar from '../components/TagBar';
 import PostsVeiw from '../components/PostsVeiw';
 import NavBar from '../components/Navbar';
 
-import Axios from 'axios';
 import { useEffect, useState } from 'react';
 const { ipcRenderer } = window.require('electron');
 
@@ -82,88 +81,53 @@ function GetTopTagsFromPosts(posts) {
 
 const Posts = () => {
     const [posts, setPosts] = useState([]);
-    const [topTags, setTopTags] = useState([]);
-    const [searchText, setSearchText] = useState('');
     const [pageNumber, setPageNumber] = useState(1);
+    const [topTags, setTopTags] = useState([]);
+    const [tags, setTags] = useState("");
 
-    const getKey = () => {
-        if (ipcRenderer.sendSync('get-data', 'loged_in') === true) {
-            let userName = ipcRenderer.sendSync('get-data', 'user_name');
-            let userKey = ipcRenderer.sendSync('get-data', 'user_api_key');
-            let base64key = Buffer.from(userName + ":" + userKey).toString('base64');
-            return base64key;
-        }
-    }
-
-    const getLoginStat = () => {
-        if (ipcRenderer.sendSync('get-data', 'loged_in') === true) {
-            return true;
-        }
-    }
-
-    const getPosts = (tags, page) => {
-        if (getLoginStat() === true) {
-            Axios.get("https://e621.net/posts?limit=75&page=" + page + "&tags=" + tags, {
-            headers: {
-                //"User-Agent": "e621dl/2.0 (by silly fella)", // idk about this
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": "basic " + getKey()
-            },
-            }).then((response) => {
-                setPosts(response.data.posts);
-                setTopTags(GetTopTagsFromPosts(response.data.posts));
-            });
-        }
-        else {
-            Axios.get("https://e621.net/posts?limit=75&page=" + page + "&tags=" + tags, {
-            headers: {
-                //"User-Agent": "e621dl/2.0 (by silly fella)", // idk about this
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            }).then((response) => {
-                setPosts(response.data.posts);
-                setTopTags(GetTopTagsFromPosts(response.data.posts));
-            });
-        }
+    const getPosts = (search_text, keep_text, page_number, keep_page) => {
+        let posts = ipcRenderer.sendSync('get-posts-from-search', search_text, keep_text, page_number, keep_page);
+        setPosts(posts);
+        setTopTags(GetTopTagsFromPosts(posts));
     };
-
-    const scrollUp = () => {
-        window.scrollTo(0, 0);
-    }
 
     const pageUp = () => {
         if (pageNumber + 1 === 751) return;
-        scrollUp();
+
+        window.scrollTo(0, 0);
+
         setPageNumber(pageNumber + 1);
-        getPosts(searchText, pageNumber + 1);
+        getPosts("", true, pageNumber + 1, false);
     };
 
     const pageDown = () => {
         if (pageNumber - 1 < 1) return;
-        scrollUp();
+
+        window.scrollTo(0, 0);
+        
         setPageNumber(pageNumber - 1);
-        getPosts(searchText, pageNumber - 1);
+        getPosts("", true, pageNumber - 1, false);
     };
 
     const refresh = () => {
-        getPosts(searchText, pageNumber);
+        getPosts("", true, 0, true);
     };
 
     useEffect(() => {
-        setPageNumber(1);
-        setSearchText("");
-        getPosts("", 1);
+        let p = ipcRenderer.sendSync('get-page-number');
+        setPageNumber(p);
+        let a = ipcRenderer.sendSync('get-search-text');
+        setTags(a);
+        getPosts(a, false, p, false);
     }, []);
 
-    return ( 
-       <div>
-            <TagBar searchText={searchText} setSearchText={setSearchText} searchFunction={getPosts} tags={topTags}/>
+    return (
+        <div>
+            <TagBar searchText={tags} setSearchText={setTags} searchFunction={getPosts} tags={topTags}/>
             <PostsVeiw posts={posts} pageNumber={pageNumber} pageUp={pageUp} pageDown={pageDown}/>
             <NavBar/>
             <button className="btn-refresh" onClick={refresh}>Refresh</button>
-       </div> 
+        </div> 
     );
 }
  
