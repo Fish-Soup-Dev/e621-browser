@@ -75,7 +75,7 @@ function GetTopTagsFromPosts(posts) {
       }
     }
     tags.sort((a, b) => b.count - a.count);
-    tags = tags.slice(0, 25);
+    tags = tags.slice(0, 60);
     return tags;
 }
 

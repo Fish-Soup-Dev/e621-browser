@@ -32,7 +32,7 @@ const TagBar = (props) => {
     }
 
     return ( 
-        <div className="tagbar">
+        <div className="scrollbar-hide overflow-y-scroll tagbar h-[calc(100vh-56px)]">
             <input type="text" 
                    className="search-bar" 
                    value={props.searchText} 

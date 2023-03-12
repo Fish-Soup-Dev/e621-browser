@@ -20,25 +20,27 @@ const PostPage = () => {
     }
 
     const likePost = (id) => {
-        
+        ipcRenderer.sendSync('like-post', id, true);
     }
 
     const dislikePost = (id) => {
-        
+        ipcRenderer.sendSync('like-post', id, false);
     }
 
     const favoritePost = (id) => {
-        
+        ipcRenderer.sendSync('fav-post', id);
     }   
 
     const unfavoritePost = (id) => {
-        
+        ipcRenderer.sendSync('unfav-post', id);
     }
 
     useEffect(() => {
         let p = ipcRenderer.sendSync('get-post', params.id);
         setPost(p);
         setStatus(true);
+        setLikeCount(p.score.total);
+        setFavoriteCount(p.fav_count);
     }, [params.id]);
 
     let picture;
@@ -53,9 +55,21 @@ const PostPage = () => {
 
     if (status === true) {
         if (post.file.ext === "webm") {
-            picture = <ReactPlayer url={post.file.url} width="100%" height="100%" playing={true} loop={true} className="h-screen"/>
+            picture = (
+                <div className="player h-full object-contain object-left-top">
+                    <ReactPlayer 
+                        url={post.file.url} 
+                        width="100%" 
+                        height="100%"
+                        playing={false} 
+                        muted={true}
+                        controls={true}
+                        className=""
+                    />
+                </div>
+            )
         } else {
-            picture = <img src={post.file.url} alt="" className="h-screen" />
+            picture = <img src={post.file.url} alt="" className="h-full object-contain object-left-top" />
         }
         tags_artist = post.tags.artist.map((tag) => (
             <p className="e6-font text-mid-orange m-1" key={tag}>{tag}</p>
@@ -88,7 +102,7 @@ const PostPage = () => {
     let controls;
     if (getLoginStat() === true) {
         controls = 
-            <div className="flex flex-row flex-none">
+            <div className="flex flex-row flex-none fixed bg-gray-600 w-screen">
                 <button className="btn-navbar h-10" onClick={() => navigate(-1)}>Back</button>
 
                 <div className="flex flex-row flex-none e6-font m-2">
@@ -107,18 +121,22 @@ const PostPage = () => {
             </div>
     } else {
         controls =
-        <div className="flex flex-col flex-none">
+        <div className="flex flex-row flex-none fixed bg-gray-600 w-screen">
             <button className="btn-navbar h-10" onClick={() => navigate(-1)}>Back</button>
         </div>
     }
 
     return (
-        <div className="post-page flex">
-            {controls}
-            <div className="post-tags overflow-y-scroll h-screen scrollbar-hide bg-gray-800 tagbar">
-                {tags_artist} {tags_character} {tags_species} {tags_copyright} {tags_general} {tags_invalid} {tags_lore} {tags_meta}
+        <div className="post-page flex flex-col">
+            <div>
+                <div className="post-tags overflow-y-scroll h-screen scrollbar-hide bg-gray-800 tagbar">
+                    {tags_artist} {tags_character} {tags_species} {tags_copyright} {tags_general} {tags_invalid} {tags_lore} {tags_meta}
+                </div>
+                <div className="top-14 left-60 absolute h-[calc(100vh-56px)]">
+                    {picture}
+                </div>
             </div>
-            {picture}
+            {controls}
         </div>
     )
 }

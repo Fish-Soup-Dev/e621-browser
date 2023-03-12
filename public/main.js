@@ -15,8 +15,8 @@ function createWindow() {
         icon: path.join(__dirname, './e621.ico'),
         width: 1330,
         height: 760,
-        minWidth: 640,
-        minHeight: 480,
+        minWidth: 840,
+        minHeight: 640,
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
@@ -163,8 +163,8 @@ ipcMain.on('set-data', (event, arg, arg1) => {
 
 //? Loggin
 //-----------------------------------------------------------------------------------
-//const e621 = new E621({authUser: store.get('user_name'), authKey: store.get('user_api_key')});
-const e621 = new E621();
+const e621 = new E621({authUser: store.get('user_name'), authKey: store.get('user_api_key')});
+//const e621 = new E621();
 //-----------------------------------------------------------------------------------
 
 let global_blacklist = [
@@ -210,11 +210,37 @@ ipcMain.on('get-posts-from-search', (event, search_string, keep_last_search, pag
 })
 //-----------------------------------------------------------------------------------
 
-//? E621 get post
+//? E621 post
 //-----------------------------------------------------------------------------------
 ipcMain.on('get-post', (event, post_id) => {
     e621.posts.get(post_id).then(data => {
         event.returnValue = data;
+    }).catch(error => {
+        console.log(error)
+    })
+})
+
+ipcMain.on('like-post', (event, post_id, vote_bool) => {
+    e621.posts.vote(post_id, vote_bool).then(data => {
+        event.returnValue = data;
+    }).catch(error => {
+        console.log(error)
+    })
+})
+
+ipcMain.on('fav-post', (event, post_id) => {
+    e621.users.addFavorite(post_id).then(data => {
+        event.returnValue = data;
+    }).catch(error => {
+        console.log(error)
+    })
+})
+
+ipcMain.on('unfav-post', (event, post_id) => {
+    e621.users.removeFavorite(post_id).then(data => {
+        event.returnValue = data;
+    }).catch(error => {
+        console.log(error)
     })
 })
 //-----------------------------------------------------------------------------------

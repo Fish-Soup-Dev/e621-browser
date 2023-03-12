@@ -13,7 +13,7 @@ const PostsVeiw = (props) => {
     }
 
     return ( 
-        <div className="postveiw">
+        <div className="postveiw h-[calc(100vh-56px)] overflow-y-scroll">
             {controlls}
             <div className="posts">
                 {props.posts.map((post) => (
