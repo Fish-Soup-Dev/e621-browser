@@ -3,6 +3,12 @@
   "version": "0.3.0",
   "description": "e621 desktop browser",
   "author": "Andrew Kawalec <andrewkawalec164@gmail.com>",
+  "repository": "https://github.com/Fish-Soup-Dev/e621-browser",
+  "keywords": [
+    "E621",
+    "Social",
+    "Images"
+  ],
   "private": true,
   "main": "./public/main.js",
   "homepage": "./",

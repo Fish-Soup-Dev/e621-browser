@@ -33,12 +33,13 @@ const TagBar = (props) => {
 
     return ( 
         <div className="scrollbar-hide overflow-y-scroll tagbar h-[calc(100vh-56px)]">
-            <input type="text" 
-                   className="search-bar" 
-                   value={props.searchText} 
-                   onKeyDown={_handleKeyDown} 
-                   onChange={(e) => props.setSearchText(e.target.value)} 
-                   placeholder="Search"
+            <input 
+                type="text" 
+                className="search-bar" 
+                value={props.searchText} 
+                onKeyDown={_handleKeyDown} 
+                onChange={(e) => props.setSearchText(e.target.value)} 
+                placeholder="Search"
             />
             <div className="tags">
                 {props.tags.map((tag) => (
