@@ -91,6 +91,11 @@ const Posts = () => {
         setTopTags(GetTopTagsFromPosts(posts));
     };
 
+    const refresh = () => {
+        getPosts("", true, 0, true);
+    };
+
+
     const pageUp = () => {
         if (pageNumber + 1 === 751) return;
 
@@ -109,10 +114,6 @@ const Posts = () => {
         getPosts("", true, pageNumber - 1, false);
     };
 
-    const refresh = () => {
-        getPosts("", true, 0, true);
-    };
-
     useEffect(() => {
         let p = ipcRenderer.sendSync('get-page-number');
         setPageNumber(p);
@@ -124,9 +125,8 @@ const Posts = () => {
     return (
         <div>
             <TagBar searchText={tags} setSearchText={setTags} searchFunction={getPosts} tags={topTags}/>
-            <PostsVeiw posts={posts} pageNumber={pageNumber} pageUp={pageUp} pageDown={pageDown}/>
+            <PostsVeiw posts={posts} pageNumber={pageNumber} pageUp={pageUp} pageDown={pageDown} refresh={refresh}/>
             <NavBar/>
-            <button className="btn-refresh" onClick={refresh}>Refresh</button>
         </div> 
     );
 }
