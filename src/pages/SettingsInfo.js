@@ -6,7 +6,7 @@ const SettingsInfo = (props) => {
        <div>
             <SettingsNav/>
             <div className="postveiw">
-                <h1 className="e6-font">V 0.3.0</h1>
+                <h1 className="e6-font">V 0.3.1</h1>
             </div>
             <NavBar/>
        </div> 
